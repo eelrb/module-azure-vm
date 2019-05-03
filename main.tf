@@ -31,7 +31,7 @@ resource "azurerm_virtual_machine" "myterraformvm" {
     location              = "eastus"
     resource_group_name   = "${var.resource_group_name}"
     network_interface_ids = ["${var.network_interface_id}"]
-    vm_size               = "Standard_DS1_v2"
+    vm_size               = "${var.vmsize}"
 
     storage_os_disk {
         name              = "myOsDisk"
