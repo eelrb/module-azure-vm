@@ -6,7 +6,7 @@ provider "azurerm" {}
 resource "random_id" "randomId" {
     keepers = {
         # Generate a new ID only when a new resource group is defined
-        resource_group = "${resource_group_name}"
+        resource_group = "${var.resource_group_name}"
     }
     
     byte_length = 8
@@ -15,7 +15,7 @@ resource "random_id" "randomId" {
 # Create storage account for boot diagnostics
 resource "azurerm_storage_account" "mystorageaccount" {
     name                        = "diag${random_id.randomId.hex}"
-    resource_group_name         = "${resource_group_name}"
+    resource_group_name         = "${var.resource_group_name}"
     location                    = "eastus"
     account_tier                = "Standard"
     account_replication_type    = "LRS"
@@ -29,8 +29,8 @@ resource "azurerm_storage_account" "mystorageaccount" {
 resource "azurerm_virtual_machine" "myterraformvm" {
     name                  = "myVM"
     location              = "eastus"
-    resource_group_name   = "${resource_group_name}"
-    network_interface_ids = ["${network_interface_id}"]
+    resource_group_name   = "${var.resource_group_name}"
+    network_interface_ids = ["${var.network_interface_id}"]
     vm_size               = "Standard_DS1_v2"
 
     storage_os_disk {
